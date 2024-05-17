@@ -19,9 +19,9 @@ const Task = ({ task, handleToggleTaskComplete, handleDeleteTask }) => {
         </label>
 
         <p>{task.title}</p>
-      </div>
-      <div>
-        <MdOutlineClose onClick={() => handleDeleteTask(task.id)} />
+        <div>
+          <MdOutlineClose onClick={() => handleDeleteTask(task.id)} />
+        </div>
       </div>
     </div>
   );

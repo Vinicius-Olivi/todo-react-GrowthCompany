@@ -25,13 +25,14 @@ function App() {
     const updatedTaskList = taskList.map((task) =>
       task.id === id ? { ...task, isComplete: !task.isComplete } : task,
     );
+
     setTaskList(updatedTaskList);
   }
 
   function handleDeleteTask(id) {
     const filteredTasks = taskList.filter((task) => task.id !== id);
     setTaskList(filteredTasks);
-    toast.error("Task deleted successfully");
+    toast.error("Task deleted successfully", { autoClose: 2000 });
   }
 
   return (
