@@ -1,71 +1,49 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import "./global.css";
-import { IoMdAdd } from "react-icons/io";
-import { MdOutlineClose } from "react-icons/md";
-
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Task from "./components/Task";
+import TaskInput from "./components/TaskInput";
 
 function App() {
-  const [task, setTask] = useState("");
-
   const [taskList, setTaskList] = useState([]);
 
-  function handleCreateTask() {
-    if (task === "") {
-      toast.error("Please enter a task", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      const idRandom = (num) => Math.floor(Math.random() * num);
+  function handleCreateTask(taskTitle) {
+    const idRandom = (num) => Math.floor(Math.random() * num);
+    const newTask = {
+      id: idRandom(10000),
+      title: taskTitle,
+      isComplete: false,
+    };
+    setTaskList([...taskList, newTask]);
+  }
 
-      const newTask = {
-        id: idRandom(10000),
-        title: task,
-        isComplete: false,
-      };
-      setTaskList([...taskList, newTask]);
-    }
+  function handleToggleTaskComplete(id) {
+    const updatedTaskList = taskList.map((task) =>
+      task.id === id ? { ...task, isComplete: !task.isComplete } : task,
+    );
+    setTaskList(updatedTaskList);
+  }
+
+  function handleDeleteTask(id) {
+    const filteredTasks = taskList.filter((task) => task.id !== id);
+    setTaskList(filteredTasks);
   }
 
   return (
     <div className="app">
       <ToastContainer />
       <div className="todo">
-        <header>
-          <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-          />
-          <button onClick={handleCreateTask}>
-            <IoMdAdd />
-          </button>
-        </header>
-
+        <TaskInput handleCreateTask={handleCreateTask} />
         {taskList.map((task) => (
-          <div key={task.id} className="task-container">
-            <div className="check-title">
-              <label className="checkbox-container">
-                <span className="checkmark"></span>
-              </label>
-
-              <p>{task.title}</p>
-            </div>
-            <div>
-              <MdOutlineClose />
-            </div>
-          </div>
+          <Task
+            key={task.id}
+            task={task}
+            handleToggleTaskComplete={handleToggleTaskComplete}
+            handleDeleteTask={handleDeleteTask}
+          />
         ))}
-
-        {/* mock test */}
       </div>
     </div>
   );
