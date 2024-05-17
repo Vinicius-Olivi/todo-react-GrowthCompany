@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.css";
 import "./global.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Task from "./components/Task";
 import TaskInput from "./components/TaskInput";
@@ -11,11 +11,13 @@ function App() {
 
   function handleCreateTask(taskTitle) {
     const idRandom = (num) => Math.floor(Math.random() * num);
+
     const newTask = {
       id: idRandom(10000),
       title: taskTitle,
       isComplete: false,
     };
+
     setTaskList([...taskList, newTask]);
   }
 

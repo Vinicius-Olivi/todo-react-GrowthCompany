@@ -10,24 +10,32 @@ const TaskInput = ({ handleCreateTask }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (task === "") {
-      toast.error("Please enter a task");
+      toast.error("Please enter a task", { autoClose: 2000 });
     } else {
       handleCreateTask(task);
       setTask("");
+      toast.success("Task added successfully", { autoClose: 2000 });
+      return;
+    }
+  }
+  function handleKeyPress(e) {
+    if (e.key === "Enter") {
+      handleSubmit(e);
     }
   }
 
   return (
     <div>
-      <ToastContainer />
       <header>
+        {/* <ToastContainer /> */}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={task}
+            placeholder="Enter a task"
             onChange={(e) => setTask(e.target.value)}
           />
-          <button type="submit">
+          <button onKeyDown={handleKeyPress} type="submit">
             <IoMdAdd />
           </button>
         </form>
