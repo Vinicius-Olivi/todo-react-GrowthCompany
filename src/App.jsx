@@ -31,6 +31,7 @@ function App() {
   function handleDeleteTask(id) {
     const filteredTasks = taskList.filter((task) => task.id !== id);
     setTaskList(filteredTasks);
+    toast.error("Task deleted successfully");
   }
 
   return (

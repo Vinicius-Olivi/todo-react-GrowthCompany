@@ -1,7 +1,7 @@
 // TaskInput.jsx
 import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const TaskInput = ({ handleCreateTask }) => {
@@ -10,7 +10,7 @@ const TaskInput = ({ handleCreateTask }) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (task === "") {
-      toast.error("Please enter a task", { autoClose: 2000 });
+      toast.info("Please enter a task", { autoClose: 2000 });
     } else {
       handleCreateTask(task);
       setTask("");
